@@ -1,3 +1,26 @@
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 /* General Styles */
 body {
     background-color: #f5f5f5;
@@ -77,15 +100,13 @@ nav .brand-logo {
 
 .chip {
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease;
     margin: 0;
     height: auto;
     padding: 0.5rem 1rem;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    background-color: #e4e4e4;
-    border: 2px solid transparent;
 }
 
 .chip:hover {
@@ -103,7 +124,6 @@ nav .brand-logo {
 .chip.active {
     background-color: #1976d2;
     color: white;
-    font-weight: 500;
 }
 
 .chip.active:hover {
@@ -142,15 +162,28 @@ nav .brand-logo {
 /* Prompt Cards */
 .prompt-card {
     height: 100%;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease-in-out;
     margin: 0.5rem 0;
     display: flex;
     flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+    animation-delay: calc(var(--card-index) * 0.05s);
+    animation-fill-mode: both;
+    opacity: 0;
 }
 
-.prompt-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.prompt-card.hiding {
+    animation: fadeOut 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.prompt-card.filtered-out {
+    display: none;
+}
+
+.prompt-card.animate-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
 }
 
 .card-content {
@@ -181,6 +214,11 @@ nav .brand-logo {
     justify-content: center;
     text-transform: none;
     font-size: 0.9rem;
+    transition: transform 0.2s ease;
+}
+
+.card-action a:hover {
+    transform: scale(1.02);
 }
 
 /* Category Icons */
@@ -189,6 +227,11 @@ nav .brand-logo {
     margin-bottom: 1rem;
     color: #1976d2;
     display: block;
+    transition: transform 0.2s ease;
+}
+
+.prompt-card:hover .category-icon {
+    transform: scale(1.1);
 }
 
 /* Toast Notifications */
@@ -199,6 +242,26 @@ nav .brand-logo {
     padding: 10px 20px;
     font-size: 0.9rem;
     margin-top: 0;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Prompts Grid */
+.prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Copy Animation */
+.prompt-card.copied {
+    animation: copyPulse 0.3s ease-in-out;
+}
+
+@keyframes copyPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
 /* Scrollbar Styling */
@@ -284,6 +347,10 @@ nav .brand-logo {
     .chip::after {
         display: none;
     }
+
+    .prompt-card:hover .category-icon {
+        transform: none;
+    }
 }
 
 /* Print Styles */
@@ -299,6 +366,10 @@ nav .brand-logo {
         break-inside: avoid;
         box-shadow: none !important;
         border: 1px solid #ddd;
+    }
+
+    .prompt-card {
+        animation: none !important;
     }
 }
 
@@ -331,5 +402,22 @@ nav .brand-logo {
     .chip:not(.active) {
         background-color: #2d2d2d;
         color: #ffffff;
+    }
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+    .prompt-card,
+    .chip,
+    .card-action a,
+    .category-icon {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .prompt-card:hover,
+    .chip:hover,
+    .prompt-card:hover .category-icon {
+        transform: none !important;
     }
 }
