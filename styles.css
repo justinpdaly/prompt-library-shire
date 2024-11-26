@@ -334,3 +334,139 @@ nav .brand-logo {
         transform: none !important;
     }
 }
+
+/* Help Button */
+.help-button {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.help-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Welcome Modal Styles */
+.modal {
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.modal .modal-content {
+    padding: 24px;
+}
+
+.modal h4 {
+    margin-top: 0;
+    color: #1976d2;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.welcome-section {
+    text-align: center;
+    padding: 1rem;
+}
+
+.welcome-section i {
+    font-size: 2.5rem;
+    color: #1976d2;
+    margin-bottom: 1rem;
+}
+
+.welcome-section h5 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.welcome-section p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem !important;
+}
+
+.dont-show-label {
+    display: flex;
+    align-items: center;
+    color: #666;
+}
+
+.dont-show-label input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.modal-close {
+    color: #1976d2 !important;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .modal {
+        background-color: #1e1e1e;
+    }
+
+    .modal h4 {
+        color: #64b5f6;
+    }
+
+    .welcome-section h5 {
+        color: #fff;
+    }
+
+    .welcome-section p {
+        color: #bbb;
+    }
+
+    .welcome-section i {
+        color: #64b5f6;
+    }
+
+    .dont-show-label {
+        color: #bbb;
+    }
+
+    .modal-footer {
+        background-color: #262626;
+    }
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 600px) {
+    .welcome-sections {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .modal-footer {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .welcome-section {
+        padding: 0.5rem;
+    }
+
+    .welcome-section i {
+        font-size: 2rem;
+    }
+}
