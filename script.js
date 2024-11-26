@@ -165,17 +165,61 @@ const categoryChips = document.querySelectorAll('.chip');
 document.addEventListener('DOMContentLoaded', () => {
     renderPrompts(prompts);
     initializeEventListeners();
+    initializeAnimations();
 });
 
 // Event Listeners
 function initializeEventListeners() {
-    searchInput.addEventListener('input', filterPrompts);
+    // Search input with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(filterPrompts, 150); // Debounce search for smooth animation
+    });
+
+    // Category chips
     categoryChips.forEach(chip => {
         chip.addEventListener('click', () => {
+            // Remove active class from all chips
             categoryChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
+            
+            // Reset all card animations before filtering
+            document.querySelectorAll('.prompt-card').forEach((card, index) => {
+                card.classList.remove('hiding', 'filtered-out');
+                card.style.setProperty('--card-index', index);
+                card.style.animation = 'none';
+                card.offsetHeight; // Force reflow
+                card.style.animation = null;
+            });
+            
             filterPrompts();
         });
+    });
+}
+
+// Initialize Animations
+function initializeAnimations() {
+    // Set up intersection observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '50px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                card.style.setProperty('--card-index', index % 3); // Stagger effect in groups of 3
+                card.classList.add('animate-in');
+                observer.unobserve(card);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all prompt cards
+    document.querySelectorAll('.prompt-card').forEach(card => {
+        observer.observe(card);
     });
 }
 
@@ -184,21 +228,51 @@ function filterPrompts() {
     const searchTerm = searchInput.value.toLowerCase();
     const activeCategory = document.querySelector('.chip.active').getAttribute('data-category');
     
-    const filtered = prompts.filter(prompt => {
-        const matchesSearch = prompt.title.toLowerCase().includes(searchTerm) ||
-                            prompt.description.toLowerCase().includes(searchTerm);
-        const matchesCategory = activeCategory === 'all' || prompt.category === activeCategory;
-        return matchesSearch && matchesCategory;
-    });
+    // Get all prompt cards
+    const cards = document.querySelectorAll('.prompt-card');
     
-    renderPrompts(filtered);
+    // Track visible cards for stagger effect
+    let visibleIndex = 0;
+    
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const description = card.querySelector('p').textContent.toLowerCase();
+        const category = card.getAttribute('data-category');
+        
+        const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        
+        if (matchesSearch && matchesCategory) {
+            // Remove any hiding classes
+            card.classList.remove('hiding', 'filtered-out');
+            // Add stagger delay
+            card.style.setProperty('--card-index', visibleIndex);
+            visibleIndex++;
+            
+            // Reset animation
+            card.style.animation = 'none';
+            card.offsetHeight; // Force reflow
+            card.style.animation = null;
+            
+            // Add fade in animation
+            card.style.animation = 'fadeIn 0.3s ease-in-out forwards';
+        } else {
+            // Start fade out animation
+            if (!card.classList.contains('filtered-out')) {
+                card.classList.add('hiding');
+                setTimeout(() => {
+                    card.classList.add('filtered-out');
+                }, 300); // Match animation duration
+            }
+        }
+    });
 }
 
 // Render Prompts
 function renderPrompts(promptsToRender) {
-    promptsContainer.innerHTML = promptsToRender.map(prompt => `
+    promptsContainer.innerHTML = promptsToRender.map((prompt, index) => `
         <div class="col s12 m6 l4">
-            <div class="card prompt-card">
+            <div class="card prompt-card" data-category="${prompt.category}" style="--card-index: ${index}">
                 <div class="card-content">
                     <i class="material-icons category-icon">${prompt.icon}</i>
                     <span class="card-title">${prompt.title}</span>
@@ -212,6 +286,9 @@ function renderPrompts(promptsToRender) {
             </div>
         </div>
     `).join('');
+
+    // Initialize animations for newly rendered cards
+    initializeAnimations();
 }
 
 // Copy Prompt Template
@@ -221,6 +298,13 @@ function copyPrompt(title) {
         navigator.clipboard.writeText(prompt.template)
             .then(() => {
                 M.toast({html: 'Template copied to clipboard!', classes: 'rounded'});
+                
+                // Add a brief animation to the card
+                const card = document.querySelector(`.prompt-card:has(.card-title:contains('${title}'))`);
+                if (card) {
+                    card.classList.add('copied');
+                    setTimeout(() => card.classList.remove('copied'), 1000);
+                }
             })
             .catch(err => {
                 M.toast({html: 'Failed to copy template', classes: 'rounded red'});
