@@ -89,24 +89,35 @@ nav .brand-logo {
     color: white !important;
 }
 
-/* Filter Chips */
+/* Filter Section */
+.filter-section {
+    margin: 1rem 0 2rem 0;
+}
+
+/* Chips Styling */
 .chips-categories {
-    padding: 0.5rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    padding: 0.5rem 0;
 }
 
 .chip {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #e4e4e4;
+    margin: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 0;
-    height: auto;
-    padding: 0.5rem 1rem;
+    user-select: none;
     white-space: nowrap;
-    position: relative;
-    overflow: hidden;
 }
 
 .chip:hover {
@@ -117,8 +128,7 @@ nav .brand-logo {
 
 .chip:focus {
     outline: none;
-    border-color: #1976d2;
-    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.4);
 }
 
 .chip.active {
@@ -130,60 +140,21 @@ nav .brand-logo {
     background-color: #1565c0;
 }
 
-/* Accessibility - Keyboard Focus */
-.chip:focus-visible {
-    outline: 2px solid #1976d2;
-    outline-offset: 2px;
-}
-
-/* Added tooltip on hover */
-.chip::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) scale(0);
-    padding: 4px 8px;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    opacity: 0;
-    transition: all 0.2s ease-in-out;
-    pointer-events: none;
-}
-
-.chip:hover::after {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
-}
-
 /* Prompt Cards */
 .prompt-card {
     height: 100%;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin: 0.5rem 0;
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.3s ease-in-out;
     animation-delay: calc(var(--card-index) * 0.05s);
     animation-fill-mode: both;
-    opacity: 0;
 }
 
-.prompt-card.hiding {
-    animation: fadeOut 0.3s ease-in-out;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.prompt-card.filtered-out {
-    display: none;
-}
-
-.prompt-card.animate-in {
-    animation: fadeIn 0.3s ease-in-out forwards;
+.prompt-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .card-content {
@@ -214,11 +185,6 @@ nav .brand-logo {
     justify-content: center;
     text-transform: none;
     font-size: 0.9rem;
-    transition: transform 0.2s ease;
-}
-
-.card-action a:hover {
-    transform: scale(1.02);
 }
 
 /* Category Icons */
@@ -227,11 +193,6 @@ nav .brand-logo {
     margin-bottom: 1rem;
     color: #1976d2;
     display: block;
-    transition: transform 0.2s ease;
-}
-
-.prompt-card:hover .category-icon {
-    transform: scale(1.1);
 }
 
 /* Toast Notifications */
@@ -242,26 +203,6 @@ nav .brand-logo {
     padding: 10px 20px;
     font-size: 0.9rem;
     margin-top: 0;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Prompts Grid */
-.prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Copy Animation */
-.prompt-card.copied {
-    animation: copyPulse 0.3s ease-in-out;
-}
-
-@keyframes copyPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
 }
 
 /* Scrollbar Styling */
@@ -334,22 +275,12 @@ nav .brand-logo {
 @media (hover: none) {
     .prompt-card:hover {
         transform: none;
+        box-shadow: none;
     }
     
-    .card-action a {
-        padding: 0.8rem 0;
-    }
-
     .chip:hover {
         transform: none;
-    }
-
-    .chip::after {
-        display: none;
-    }
-
-    .prompt-card:hover .category-icon {
-        transform: none;
+        box-shadow: none;
     }
 }
 
@@ -366,21 +297,6 @@ nav .brand-logo {
         break-inside: avoid;
         box-shadow: none !important;
         border: 1px solid #ddd;
-    }
-
-    .prompt-card {
-        animation: none !important;
-    }
-}
-
-/* High DPI Screen Optimizations */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .card {
-        border-radius: 4px;
-    }
-    
-    .chip {
-        border-radius: 16px;
     }
 }
 
@@ -405,19 +321,16 @@ nav .brand-logo {
     }
 }
 
-/* Reduce Motion */
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     .prompt-card,
-    .chip,
-    .card-action a,
-    .category-icon {
+    .chip {
         transition: none !important;
         animation: none !important;
     }
 
     .prompt-card:hover,
-    .chip:hover,
-    .prompt-card:hover .category-icon {
+    .chip:hover {
         transform: none !important;
     }
 }
