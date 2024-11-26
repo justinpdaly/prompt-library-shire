@@ -1,3 +1,93 @@
+// Add this at the start of your JavaScript file, before the prompts data
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if it's the user's first visit
+    if (!localStorage.getItem('hasVisitedBefore')) {
+        showWelcomeDialog();
+        localStorage.setItem('hasVisitedBefore', 'true');
+    }
+    
+    // Initialize the rest of the app
+    renderPrompts(prompts);
+    initializeEventListeners();
+});
+
+// Add this function to your JavaScript
+function showWelcomeDialog() {
+    const dialogHTML = `
+        <div id="welcome-modal" class="modal">
+            <div class="modal-content">
+                <h4>Welcome to the Prompt Library</h4>
+                <div class="welcome-sections">
+                    <div class="welcome-section">
+                        <i class="material-icons">search</i>
+                        <h5>Search</h5>
+                        <p>Use the search bar to find specific prompts by keywords.</p>
+                    </div>
+                    <div class="welcome-section">
+                        <i class="material-icons">filter_list</i>
+                        <h5>Filter</h5>
+                        <p>Click the category chips to filter prompts by type.</p>
+                    </div>
+                    <div class="welcome-section">
+                        <i class="material-icons">content_copy</i>
+                        <h5>Copy</h5>
+                        <p>Click "Copy Template" to copy a prompt to your clipboard.</p>
+                    </div>
+                    <div class="welcome-section">
+                        <i class="material-icons">help_outline</i>
+                        <h5>Help</h5>
+                        <p>Click the help icon in the top right to see this guide again.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label class="dont-show-label">
+                    <input type="checkbox" id="dontShowAgain" />
+                    <span>Don't show this again</span>
+                </label>
+                <a href="#!" class="modal-close waves-effect waves-blue btn-flat">Got it!</a>
+            </div>
+        </div>
+    `;
+
+    // Add the dialog to the page
+    document.body.insertAdjacentHTML('beforeend', dialogHTML);
+
+    // Initialize the modal
+    const modalElement = document.getElementById('welcome-modal');
+    const modalInstance = M.Modal.init(modalElement, {
+        dismissible: true,
+        opacity: 0.5,
+        inDuration: 300,
+        outDuration: 200
+    });
+
+    // Show the modal
+    modalInstance.open();
+
+    // Handle "Don't show again" checkbox
+    document.getElementById('dontShowAgain').addEventListener('change', (e) => {
+        if (e.target.checked) {
+            localStorage.setItem('hasVisitedBefore', 'true');
+        } else {
+            localStorage.removeItem('hasVisitedBefore');
+        }
+    });
+}
+
+// Add help button to the navigation
+function addHelpButton() {
+    const nav = document.querySelector('nav .brand-logo');
+    nav.insertAdjacentHTML('afterend', `
+        <a href="#!" class="help-button" onclick="showWelcomeDialog()">
+            <i class="material-icons">help_outline</i>
+        </a>
+    `);
+}
+
+// Call this in your initialization
+addHelpButton();
+
 // Prompt Data
 const prompts = [
     {
