@@ -14,18 +14,8 @@
     <nav class="blue darken-3">
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo">Prompt Library</a>
-            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#search"><i class="material-icons left">search</i>Search</a></li>
-                <li><a href="#categories"><i class="material-icons left">folder</i>Categories</a></li>
-            </ul>
         </div>
     </nav>
-
-    <ul class="sidenav" id="mobile-nav">
-        <li><a href="#search"><i class="material-icons left">search</i>Search</a></li>
-        <li><a href="#categories"><i class="material-icons left">folder</i>Categories</a></li>
-    </ul>
 
     <div class="container">
         <div class="row search-section">
@@ -58,13 +48,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="script.js"></script>
-    
-    <script>
-        // Initialize mobile sidenav
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-        });
-    </script>
 </body>
 </html>
