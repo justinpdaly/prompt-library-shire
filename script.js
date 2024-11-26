@@ -179,25 +179,9 @@ function initializeEventListeners() {
     // Category chips
     categoryChips.forEach(chip => {
         chip.addEventListener('click', () => {
-            // Add exit animation to currently visible cards
-            document.querySelectorAll('.prompt-card:not(.filtered-out)').forEach(card => {
-                card.classList.add('card-exit');
-            });
-
-            // Remove active class from all chips with animation
-            categoryChips.forEach(c => {
-                c.classList.remove('active');
-                c.classList.remove('chip-selected');
-            });
-
-            // Add active class and animation to selected chip
+            categoryChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
-            chip.classList.add('chip-selected');
-
-            // Delay filtering to allow for exit animation
-            setTimeout(() => {
-                filterPrompts();
-            }, 300);
+            filterPrompts();
         });
     });
 }
@@ -217,63 +201,36 @@ function filterPrompts() {
     renderPrompts(filtered);
 }
 
-// Render Prompts with Animation
+// Render Prompts
 function renderPrompts(promptsToRender) {
     promptsContainer.innerHTML = promptsToRender.map((prompt, index) => `
         <div class="col s12 m6 l4">
-            <div class="card prompt-card card-enter" 
-                 data-category="${prompt.category}" 
-                 style="--animation-order: ${index};">
+            <div class="card prompt-card" data-category="${prompt.category}">
                 <div class="card-content">
                     <i class="material-icons category-icon">${prompt.icon}</i>
                     <span class="card-title">${prompt.title}</span>
                     <p>${prompt.description}</p>
                 </div>
                 <div class="card-action">
-                    <a href="#" onclick="copyPrompt('${prompt.title}'); return false;" class="copy-button">
+                    <a href="#" onclick="copyPrompt('${prompt.title}')">
                         <i class="material-icons left">content_copy</i>Copy Template
                     </a>
                 </div>
             </div>
         </div>
     `).join('');
-
-    // Remove enter animation class after animation completes
-    setTimeout(() => {
-        document.querySelectorAll('.card-enter').forEach(card => {
-            card.classList.remove('card-enter');
-        });
-    }, 500);
 }
 
-// Copy Prompt Template with Animation
+// Copy Prompt Template
 function copyPrompt(title) {
     const prompt = prompts.find(p => p.title === title);
     if (prompt) {
         navigator.clipboard.writeText(prompt.template)
             .then(() => {
-                // Find the card element
-                const card = document.querySelector(`.prompt-card .card-title:contains("${title}")`).closest('.prompt-card');
-                
-                // Add copy success animation
-                card.classList.add('copy-success');
-                
-                // Show toast
-                M.toast({
-                    html: 'Template copied to clipboard!',
-                    classes: 'rounded copy-toast'
-                });
-                
-                // Remove animation class after it completes
-                setTimeout(() => {
-                    card.classList.remove('copy-success');
-                }, 1000);
+                M.toast({html: 'Template copied to clipboard!', classes: 'rounded'});
             })
             .catch(err => {
-                M.toast({
-                    html: 'Failed to copy template',
-                    classes: 'rounded red copy-toast'
-                });
+                M.toast({html: 'Failed to copy template', classes: 'rounded red'});
             });
     }
 }
