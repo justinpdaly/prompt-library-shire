@@ -30,14 +30,48 @@ nav .brand-logo {
     margin: 1.5rem 0;
 }
 
+/* Search Input Styling */
 .input-field input[type=text] {
     padding-right: 3rem;
+    color: white !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
 
+/* Search Label */
+.input-field label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Active/Focused Label */
+.input-field input[type=text]:focus + label {
+    color: white !important;
+}
+
+/* Search Icon */
 .input-field .prefix {
     font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
+.input-field .prefix.active {
+    color: white;
+}
+
+/* Active Border */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid white !important;
+    box-shadow: 0 1px 0 0 white !important;
+}
+
+/* Placeholder Text */
+.input-field input[type=text]::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Selection Color */
+.input-field input[type=text]::selection {
+    background: rgba(255, 255, 255, 0.2);
+}
 /* Filter Chips */
 .chips-categories {
     padding: 0.5rem 0;
