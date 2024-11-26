@@ -1,56 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Local Government Prompt Library - A collection of professional templates for government communication">
-    <meta name="theme-color" content="#1976d2">
-    <title>Local Government Prompt Library</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="blue darken-3">
-        <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">Prompt Library</a>
-        </div>
-    </nav>
-
-    <div class="search-container">
-        <div class="container">
-            <div class="row search-section">
-                <div class="col s12">
-                    <div class="input-field">
-                        <i class="material-icons prefix">search</i>
-                        <input type="text" id="search-input" class="white-text">
-                        <label for="search-input">Search prompts...</label>
-                    </div>
-                </div>
+<div class="container">
+    <div class="row filter-section">
+        <div class="col s12 chips-wrapper">
+            <div class="chips chips-categories">
+                <div class="chip active" data-category="all">All</div>
+                <div class="chip" data-category="communication">Communication</div>
+                <div class="chip" data-category="document">Document Management</div>
+                <div class="chip" data-category="project">Project Planning</div>
+                <div class="chip" data-category="research">Research & Analysis</div>
+                <div class="chip" data-category="content">Content Development</div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row filter-section">
-            <div class="col s12 chips-wrapper">
-                <div class="chips chips-categories" role="group" aria-label="Filter categories">
-                    <div class="chip active" data-category="all" role="button" tabindex="0" data-tooltip="Show all prompts" aria-label="Filter: All prompts">All</div>
-                    <div class="chip" data-category="communication" role="button" tabindex="0" data-tooltip="Show communication prompts" aria-label="Filter: Communication prompts">Communication</div>
-                    <div class="chip" data-category="document" role="button" tabindex="0" data-tooltip="Show document management prompts" aria-label="Filter: Document management prompts">Document Management</div>
-                    <div class="chip" data-category="project" role="button" tabindex="0" data-tooltip="Show project planning prompts" aria-label="Filter: Project planning prompts">Project Planning</div>
-                    <div class="chip" data-category="research" role="button" tabindex="0" data-tooltip="Show research and analysis prompts" aria-label="Filter: Research and analysis prompts">Research & Analysis</div>
-                    <div class="chip" data-category="content" role="button" tabindex="0" data-tooltip="Show content development prompts" aria-label="Filter: Content development prompts">Content Development</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row" id="prompts-container">
-            <!-- Prompts will be dynamically inserted here -->
-        </div>
+    <div class="row" id="prompts-container">
+        <!-- Prompts will be dynamically inserted here -->
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
