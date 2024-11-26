@@ -31,10 +31,15 @@ nav .brand-logo {
 }
 
 /* Search Input Styling */
-.input-field input[type=text] {
+.input-field input[type=text],
+.input-field input[type=text]:focus,
+.input-field input[type=text].valid,
+.input-field input[type=text].invalid {
     padding-right: 3rem;
     color: white !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+    -webkit-text-fill-color: white !important;
+    box-shadow: none !important;
 }
 
 /* Search Label */
@@ -43,7 +48,8 @@ nav .brand-logo {
 }
 
 /* Active/Focused Label */
-.input-field input[type=text]:focus + label {
+.input-field input[type=text]:focus + label,
+.input-field.active label {
     color: white !important;
 }
 
@@ -72,6 +78,16 @@ nav .brand-logo {
 .input-field input[type=text]::selection {
     background: rgba(255, 255, 255, 0.2);
 }
+
+/* Autocomplete Override */
+.input-field input[type=text]:-webkit-autofill,
+.input-field input[type=text]:-webkit-autofill:hover,
+.input-field input[type=text]:-webkit-autofill:focus {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Filter Chips */
 .chips-categories {
     padding: 0.5rem 0;
