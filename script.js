@@ -26,7 +26,7 @@ function showWelcomeDialog() {
                     <div class="welcome-section">
                         <i class="material-icons">filter_list</i>
                         <h5>Filter</h5>
-                        <p>Click the category chips to filter prompts by type.</p>
+                        <p>Select the category chips to filter prompts by type.</p>
                     </div>
                     <div class="welcome-section">
                         <i class="material-icons">content_copy</i>
@@ -36,7 +36,7 @@ function showWelcomeDialog() {
                     <div class="welcome-section">
                         <i class="material-icons">help_outline</i>
                         <h5>Help</h5>
-                        <p>Click the help icon in the top right to see this guide again.</p>
+                        <p>Select the help icon in the top right to see this guide again.</p>
                     </div>
                 </div>
             </div>
