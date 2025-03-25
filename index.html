@@ -6,25 +6,46 @@
     <meta name="description" content="Local Government Prompt Library - A collection of professional templates for government communication">
     <meta name="theme-color" content="#1976d2">
     <title>Local Government Prompt Library</title>
-    <!-- Make sure these CDN links are correct and loading -->
+    <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
     <nav class="blue darken-3">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">Prompt Library</a>
+            <div class="nav-title-wrapper">
+                <i class="material-icons logo-icon">auto_awesome</i>
+                <a href="#" class="brand-logo">Prompt Library</a>
+            </div>
+            <a href="#!" class="help-button" aria-label="Help">
+                <i class="material-icons">help_outline</i>
+            </a>
         </div>
     </nav>
 
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="container">
+            <h1>Local Government Prompt Library</h1>
+            <p>Access professional AI prompt templates designed specifically for local government needs.</p>
+        </div>
+        <div class="header-bg"></div>
+    </header>
+
+    <!-- Search Section -->
     <div class="search-container">
         <div class="container">
             <div class="row search-section">
                 <div class="col s12">
-                    <div class="input-field">
+                    <div class="input-field search-box">
                         <i class="material-icons prefix">search</i>
-                        <input type="text" id="search-input" class="white-text">
+                        <input type="text" id="search-input" class="white-text" aria-label="Search prompts">
                         <label for="search-input">Search prompts...</label>
                     </div>
                 </div>
@@ -32,26 +53,198 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row filter-section">
+    <!-- Main Content -->
+    <main id="main-content" class="container">
+        <!-- Filter Section -->
+        <div class="row">
             <div class="col s12">
-                <div class="chips chips-categories">
-                    <div class="chip active" data-category="all" tabindex="0">All</div>
-                    <div class="chip" data-category="communication" tabindex="0">Communication</div>
-                    <div class="chip" data-category="document" tabindex="0">Document Management</div>
-                    <div class="chip" data-category="project" tabindex="0">Project Planning</div>
-                    <div class="chip" data-category="research" tabindex="0">Research & Analysis</div>
-                    <div class="chip" data-category="content" tabindex="0">Content Development</div>
+                <div class="filter-section">
+                    <div class="category-heading">Filter by category</div>
+                    <div class="chips chips-categories">
+                        <div class="chip active" data-category="all" tabindex="0" role="button" aria-pressed="true">All</div>
+                        <div class="chip" data-category="communication" tabindex="0" role="button" aria-pressed="false">Communication</div>
+                        <div class="chip" data-category="document" tabindex="0" role="button" aria-pressed="false">Document Management</div>
+                        <div class="chip" data-category="project" tabindex="0" role="button" aria-pressed="false">Project Planning</div>
+                        <div class="chip" data-category="research" tabindex="0" role="button" aria-pressed="false">Research & Analysis</div>
+                        <div class="chip" data-category="content" tabindex="0" role="button" aria-pressed="false">Content Development</div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Results Summary -->
+        <div class="row">
+            <div class="col s12">
+                <div class="results-summary" id="results-counter"></div>
+            </div>
+        </div>
+
+        <!-- Prompts Grid -->
         <div class="row" id="prompts-container">
             <!-- Prompts will be dynamically inserted here -->
         </div>
+
+        <!-- Empty State (shown when no results) -->
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <i class="material-icons">search_off</i>
+            <h3>No prompts found</h3>
+            <p>Try adjusting your search terms or selecting a different category.</p>
+            <button class="btn blue darken-3 waves-effect waves-light" id="reset-filters">
+                <i class="material-icons left">refresh</i>Reset Filters
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About the Library</h5>
+                    <p>This prompt library is designed to help local government staff effectively utilize AI tools for various tasks.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#!">How to Use Prompts</a></li>
+                        <li><a href="#!">AI Best Practices</a></li>
+                        <li><a href="#!">Contribute Templates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Resources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#!">AI Policy Guide</a></li>
+                        <li><a href="#!">Privacy Statement</a></li>
+                        <li><a href="#!">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <span id="current-year"></span> Local Government. Created for staff use.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add New Prompt Button -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large blue darken-3 waves-effect waves-light" id="suggest-prompt-btn" aria-label="Suggest a new prompt">
+            <i class="large material-icons">add</i>
+        </a>
     </div>
 
-    <!-- Make sure these script tags are in the correct order -->
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <h4>Welcome to the Prompt Library</h4>
+            <div class="welcome-sections">
+                <div class="welcome-section">
+                    <i class="material-icons">search</i>
+                    <h5>Search</h5>
+                    <p>Use the search bar to find specific prompts by keywords.</p>
+                </div>
+                <div class="welcome-section">
+                    <i class="material-icons">filter_list</i>
+                    <h5>Filter</h5>
+                    <p>Select the category chips to filter prompts by type.</p>
+                </div>
+                <div class="welcome-section">
+                    <i class="material-icons">content_copy</i>
+                    <h5>Copy</h5>
+                    <p>Click "Copy Template" to copy a prompt to your clipboard.</p>
+                </div>
+                <div class="welcome-section">
+                    <i class="material-icons">star</i>
+                    <h5>Favorites</h5>
+                    <p>Click the star icon to mark prompts as favorites for quick access.</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <label class="dont-show-label">
+                <input type="checkbox" id="dontShowAgain" />
+                <span>Don't show this again</span>
+            </label>
+            <a href="#!" class="modal-close waves-effect waves-blue btn-flat">Got it!</a>
+        </div>
+    </div>
+
+    <!-- Prompt Detail Modal -->
+    <div id="prompt-detail-modal" class="modal prompt-modal">
+        <div class="modal-content">
+            <div class="prompt-modal-title">
+                <i class="material-icons" id="modal-icon"></i>
+                <div>
+                    <h4 id="modal-title"></h4>
+                    <div class="card-category" id="modal-category"></div>
+                </div>
+            </div>
+            <p id="modal-description"></p>
+            <h5>Template:</h5>
+            <div class="prompt-full-template" id="modal-template"></div>
+            <div class="modal-actions">
+                <button class="btn blue darken-3 waves-effect waves-light" id="modal-copy-btn">
+                    <i class="material-icons left">content_copy</i>Copy Template
+                </button>
+                <button class="btn-flat waves-effect waves-light" id="modal-favorite-btn">
+                    <i class="material-icons left">star_border</i>Add to Favorites
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-blue btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Suggest Prompt Modal -->
+    <div id="suggest-prompt-modal" class="modal prompt-modal">
+        <div class="modal-content">
+            <h4>Suggest a New Prompt</h4>
+            <p>Have an effective prompt template you'd like to share with colleagues? Submit it here.</p>
+            <div class="row">
+                <form class="col s12" id="suggest-form">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="prompt-title" type="text" class="validate" required>
+                            <label for="prompt-title">Prompt Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="prompt-description" class="materialize-textarea" required></textarea>
+                            <label for="prompt-description">Brief Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="prompt-category" required>
+                                <option value="" disabled selected>Choose a category</option>
+                                <option value="communication">Communication</option>
+                                <option value="document">Document Management</option>
+                                <option value="project">Project Planning</option>
+                                <option value="research">Research & Analysis</option>
+                                <option value="content">Content Development</option>
+                            </select>
+                            <label>Category</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="prompt-template" class="materialize-textarea" required></textarea>
+                            <label for="prompt-template">Prompt Template</label>
+                            <span class="helper-text">Include placeholder text for customizable parts using [square brackets].</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close waves-effect waves-light btn-flat">Cancel</button>
+            <button class="waves-effect waves-light btn blue darken-3" id="submit-prompt-btn">Submit</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="script.js"></script>
 </body>
